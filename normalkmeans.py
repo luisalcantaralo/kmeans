@@ -44,9 +44,13 @@ def euclideanDistance(pointA, pointB):
     return math.sqrt(sums)
 
 def reCalculateMeans(centroids, clusters):
+    i = 0
     for cluster in clusters:
-        avg = [float(sum(col))/len(col) for col in cluster]
+        avg = [float(sum(col))/len(col) for col in zip(*cluster)]
         print(avg)
+        centroids[i] = avg
+        i += 1
+    print("Centroides nuevos", centroids)
 
 def kmeans(points, centroids):
     for point in points:
@@ -65,7 +69,9 @@ def kmeans(points, centroids):
         clusters[index].append(point)
         print("\n")
     print(clusters)
+    print("Centroides viejos", centroids)
     reCalculateMeans(centroids, clusters)
+    print(clusters)
 
 points = read()
 k = len(points[0])
