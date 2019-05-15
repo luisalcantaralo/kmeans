@@ -1,7 +1,20 @@
 class KdTree:
-    def __init__(self, root):
-        self.root = root
-        self.k = len(root.points)
+    def __init__(self, points):
+        self.k = len(points[0])
+        self.root = self.buildTree(points,0)
+
+    def buildTree(self,points, depth):
+        cd = depth % self.k
+        pointsOrdered = sorted(points, key=lambda x: x[cd])
+        mid = len(pointsOrdered)//2
+        node = KNode(pointsOrdered[mid])
+
+        print(points)
+        node.left = self.buildTree(pointsOrdered[:mid:], depth+1) if len(pointsOrdered[:mid:]) > 1 else None
+        node.right = self.buildTree(pointsOrdered[mid+1::],depth+1) if len(pointsOrdered[mid::]) > 1 else None
+
+
+        return node
 
     def insertNode(self, node, point, depth):
         dimension = depth % self.k
@@ -23,6 +36,7 @@ class KdTree:
         return self.insertNode(self.root, point, 0)
 
     def searchNode(self, node, point, depth):
+        
         if node == None:
             return False
         if node.points == point:
@@ -37,18 +51,10 @@ class KdTree:
     def search(self, point):
         return self.searchNode(self.root, point, 0)
 
+
+
 class KNode:
     def __init__(self, points):
         self.points = points
         self.left = None
         self.right = None
-
-
-points = [[2,3], [1,1], [6,3], [4,5]]
-
-tree = KdTree(KNode([4,3]))
-
-for point in points:
-    tree.insert(point)
-
-print(tree.search([2,3]))
