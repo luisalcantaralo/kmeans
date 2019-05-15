@@ -1,5 +1,6 @@
 import sys
 import random
+from math import sqrt
 
 class KdTree:
     def __init__(self, points):
@@ -100,6 +101,12 @@ def generateKCenters(k):
 
     return Z
 
+def euclideanDistance(pointA, pointB):
+    sums = 0
+    for i in range(len(pointA)):
+        sums += pow((pointA[i])-pointB[i],2)
+
+    return sqrt(sums)
 
 # Points
 points = [(2,3,2), (1,1,3), (6,3,8), (4,5,2), (7,8,5), (2,5,0)]
