@@ -47,38 +47,38 @@ def reCalculateMeans(centroids, clusters):
     i = 0
     for cluster in clusters:
         avg = [float(sum(col))/len(col) for col in zip(*cluster)]
-        print(avg)
         centroids[i] = avg
         i += 1
-    print("Centroides nuevos", centroids)
 
-def kmeans(points, centroids):
-    for point in points:
-        minPoint = euclideanDistance(point, centroids[0])
-        index = 0
-        print("Punto: ",point)
-        for centroid in centroids:
-            print("Centroide: ", centroid)
-            print("Distancia: ", euclideanDistance(point, centroid))
-            min = euclideanDistance(point, centroid)
-            if min < minPoint:
-                minPoint = min
-                index = centroids.index(centroid)
-        print("Distancia minima",minPoint)
-        print(index)
-        clusters[index].append(point)
-        print("\n")
-    print(clusters)
-    print("Centroides viejos", centroids)
-    reCalculateMeans(centroids, clusters)
-    print(clusters)
+def kmeans(points, centroids,clusters,  N):
+    i = 0
+    prev  = centroids[::-1]
+
+    while i < N and prev != centroids:
+        for point in points:
+            minPoint = euclideanDistance(point, centroids[0])
+            index = 0
+            for centroid in centroids:
+                min = euclideanDistance(point, centroid)
+                if min < minPoint:
+                    minPoint = min
+                    index = centroids.index(centroid)
+            clusters[index].append(point)
+        prev = centroids[::1]
+        reCalculateMeans(centroids, clusters)
+        final = clusters[::1]
+        clusters = [[] for x in range(k)]
+        i += 1
+    print("Procedimiento completado con", i, "iteracion(es)")
+    print(final)
 
 points = read()
 k = len(points[0])
 
 centroids = generateKCenters(k)
 clusters = [[] for x in range(k)]
-kmeans(points, centroids)
+print(len(clusters))
+kmeans(points, centroids, clusters, 30)
 
 
 
