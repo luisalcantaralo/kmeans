@@ -38,7 +38,7 @@ def generateKCenters(k):
 
 def euclideanDistance(pointA, pointB):
     sums = 0
-    for i in range(len(pointA)):
+    for i in range(k):
         sums += pow((pointA[i]-pointB[i]),2)
 
     return math.sqrt(sums)
@@ -49,10 +49,8 @@ def reCalculateMeans(centroids, clusters):
         avg = [float(sum(col))/len(col) for col in zip(*cluster)]
         centroids[i] = avg
         i += 1
-
 def kmeans(points, centroids,clusters,  N):
     i = 0
-    prev  = centroids[::-1]
 
     while i < N:
         for point in points:
@@ -74,6 +72,7 @@ def kmeans(points, centroids,clusters,  N):
     for cluster in final:
         print("Cluster",j,":", cluster)
         j+= 1
+
 points = read()
 k = len(points[0])
 
