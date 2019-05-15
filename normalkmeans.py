@@ -79,7 +79,6 @@ k = len(points[0])
 
 centroids = generateKCenters(k)
 clusters = [[] for x in range(k)]
-print(len(clusters))
 kmeans(points, centroids, clusters, 30)
 
 
