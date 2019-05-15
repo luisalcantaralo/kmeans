@@ -1,4 +1,6 @@
-# adasd
+import sys
+import random
+
 class KdTree:
     def __init__(self, points):
         self.k = len(points[0])
@@ -10,7 +12,11 @@ class KdTree:
         pointsOrdered = sorted(points, key=lambda x: x[cd])
         mid = len(pointsOrdered)//2
 
-        node = KNode(pointsOrdered[mid])
+        wgtCent = 0
+        for point in pointsOrdered:
+            wgtCent += point[cd]
+
+        node = KNode(pointsOrdered[mid],len(pointsOrdered), wgtCent, pointsOrdered[mid][cd])
 
 
         node.left = self.buildTree(pointsOrdered[:mid:], depth+1) if len(pointsOrdered[:mid:]) > 0 else None
@@ -56,20 +62,48 @@ class KdTree:
 
 
 class KNode:
-    def __init__(self, points):
+    def __init__(self, points, count, wgtCent, axis):
         self.points = points
         self.left = None
         self.right = None
-
+        self.centroid = wgtCent/count
+        self.axis = axis
         # Compute number of associated data u.count and weighted centroid
 
         # u.wgtCente vector sum of associated points
+
+
 
     def isLeaf(self):
         return points.count == 1
 
 
-points = [(2,3), (1,1), (6,3), (4,5), (7,8), (2,5)]
+def generateKCenters(k):
+    # Random K Centers
+    minima = [sys.maxsize for i in range(tree.k)];
+    maxima = [-sys.maxsize - 1 for i in range(tree.k)];
 
+    for point in points:
+        for f in range(len(point)):
+            if (point[f] < minima[f]):
+                minima[f] = point[f];
+
+            if (point[f] > maxima[f]):
+                maxima[f] = point[f];
+
+    Z = [[0 for j in range(tree.k)] for i in range(tree.k)]
+
+    for i in range(tree.k):
+        for j in range(tree.k):
+            center = random.randint(minima[j], maxima[j])
+            Z[i][j] = center
+
+    return Z
+
+
+# Points
+points = [(2,3,2), (1,1,3), (6,3,8), (4,5,2), (7,8,5), (2,5,0)]
 tree = KdTree(points)
+
+
 
