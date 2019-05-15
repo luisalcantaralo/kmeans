@@ -2,16 +2,15 @@ import sys
 import math
 import random
 
-def read():
+def read(filename):
 
-    it = iter(sys.stdin.read().splitlines())
-
-    n, k = [int(x) for x in next(it).split(" ")]
-
+    entry = open(filename, "r").readlines()
     points = []
+    for line in entry:
+        line = line.rstrip()
+        line = line.split(" ")
 
-    for i in range(n):
-        points.append([int(x) for x in next(it).split(" ")])
+        points.append([int(x) for x in line])
 
     return points
 
@@ -31,7 +30,7 @@ def generateKCenters(k):
 
     for i in range(k):
         for j in range(k):
-            center = random.randint(minima[j], maxima[j])
+            center = random.randint(minima[j]//2, maxima[j]//2)
             Z[i][j] = center
     return Z
 
@@ -52,6 +51,11 @@ def reCalculateMeans(centroids, clusters):
     for i in range(len(centroids)):
         if len(averages) > 1:
             centroids[i] = averages[i]
+
+def generateClusters():
+    clusters = [[] for x in range(k)]
+    return clusters
+
 def kmeans(points, centroids,clusters,  N):
     i = 0
     while i < N:
@@ -59,15 +63,15 @@ def kmeans(points, centroids,clusters,  N):
             minPoint = euclideanDistance(point, centroids[0])
             index = 0
             for j  in range(len(centroids)):
-                min = euclideanDistance(point, centroids[j])
-                if min < minPoint:
-                    minPoint = min
+                dist = euclideanDistance(point, centroids[j])
+                if dist < minPoint:
+                    minPoint = dist
                     index = centroids.index(centroids[j])
             clusters[index].append(point)
 
         reCalculateMeans(centroids, clusters)
         final = clusters[::1]
-        clusters = [[] for x in range(k)]
+        clusters = generateClusters()
         i += 1
     print("Procedimiento completado con", i, "iteracion(es)")
     j = 1
@@ -76,12 +80,11 @@ def kmeans(points, centroids,clusters,  N):
         j+= 1
 
 
-points = read()
+points = read("input.txt")
 k = len(points[0])
 
 centroids = generateKCenters(k)
-clusters = [[] for x in range(k)]
-kmeans(points, centroids, clusters, 60)
+kmeans(points, centroids, generateClusters(), 30)
 
 
 
