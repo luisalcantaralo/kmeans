@@ -61,6 +61,10 @@ class KNode:
         self.left = None
         self.right = None
 
+        # Compute number of associated data u.count and weighted centroid
+
+        # u.wgtCente vector sum of associated points
+
     def isLeaf(self):
         return points.count == 1
 
