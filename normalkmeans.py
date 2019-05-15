@@ -54,7 +54,7 @@ def kmeans(points, centroids,clusters,  N):
     i = 0
     prev  = centroids[::-1]
 
-    while i < N and prev != centroids:
+    while i < N:
         for point in points:
             minPoint = euclideanDistance(point, centroids[0])
             index = 0
@@ -70,8 +70,10 @@ def kmeans(points, centroids,clusters,  N):
         clusters = [[] for x in range(k)]
         i += 1
     print("Procedimiento completado con", i, "iteracion(es)")
-    print(final)
-
+    j = 1
+    for cluster in final:
+        print("Cluster",j,":", cluster)
+        j+= 1
 points = read()
 k = len(points[0])
 
