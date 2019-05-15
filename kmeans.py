@@ -78,9 +78,7 @@ class KNode:
     def isLeaf(self):
         return points.count == 1
 
-
 def generateKCenters(k):
-    # Random K Centers
     minima = [sys.maxsize for i in range(tree.k)];
     maxima = [-sys.maxsize - 1 for i in range(tree.k)];
 
