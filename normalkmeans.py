@@ -52,7 +52,6 @@ def reCalculateMeans(centroids, clusters):
     for i in range(len(centroids)):
         if len(averages) > 1:
             centroids[i] = averages[i]
-    print(centroids)
 def kmeans(points, centroids,clusters,  N):
     i = 0
     while i < N:
@@ -81,9 +80,8 @@ points = read()
 k = len(points[0])
 
 centroids = generateKCenters(k)
-print(centroids)
 clusters = [[] for x in range(k)]
-kmeans(points, centroids, clusters, 30)
+kmeans(points, centroids, clusters, 60)
 
 
 
