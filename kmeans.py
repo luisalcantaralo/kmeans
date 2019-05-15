@@ -106,6 +106,8 @@ def euclideanDistance(pointA, pointB):
 
     return sqrt(sums)
 
+
+
 # Points
 points = [(2,3,2), (1,1,3), (6,3,8), (4,5,2), (7,8,5), (2,5,0)]
 tree = KdTree(points)
